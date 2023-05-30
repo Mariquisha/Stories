@@ -123,7 +123,7 @@ router.delete('/:id', ensureAuth, async (req, res) => {
       if (story.user != req.user.id) {
         res.redirect('/stories')
       } else {
-        await Story.remove({ _id: req.params.id })
+        await Story.deleteOne({ _id: req.params.id })
         res.redirect('/dashboard')
       }
     } catch (err) {
@@ -138,14 +138,16 @@ router.get('/user/:userId', ensureAuth, async (req, res) =>{
     try {
         const stories = await Story.find({
             user: req.params.userId,
+            //user: req.user.id,
             status: 'public'
         })
         .populate('user')
         .lean()
 
-        res.render('stories/index'), {
+        res.render('stories/index', {
+           // name: req.user.firstName,
             stories
-        }
+        })
     } catch (err) {
         console.errorr(err)
         res.render('error/500')
