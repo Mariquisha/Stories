@@ -3,7 +3,7 @@ const { errorMonitor } = require('connect-mongo')
 const mongoose = require('mongoose')
 const passport = require('passport')
 const User = require('../models/User')
-const url = require('url');
+
 
 
 module.exports = function(passort){
@@ -48,12 +48,5 @@ module.exports = function(passort){
     
 }
 // Receive the callback from Google's OAuth 2.0 server.
-if (req.url.startsWith('/oauth2callback')) {
-    // Handle the OAuth 2.0 server response
-    let q = url.parse(req.url, true).query;
-  
-    // Get access and refresh tokens (if access_type is offline)
-    let { tokens } = await oauth2Client.getToken(q.code);
-    oauth2Client.setCredentials(tokens);
-  }
+
   
